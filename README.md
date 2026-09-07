@@ -1,8 +1,11 @@
 # 🚚 RouteOpt — Last-Mile Delivery Route Optimizer
+[Live Demo](https://sudeepmengji.pythonanywhere.com) · [GitHub Repo](https://github.com/Sudeep-mengji/route-optimizer)
 
 A full-stack dispatch console that solves the **Vehicle Routing Problem (VRP)** to compute optimal delivery routes across a fleet of vehicles — built with Django, Django REST Framework, Google OR-Tools, MySQL, and Leaflet.js.
 
 RouteOpt takes a depot, a fleet of vehicles with capacity limits, and a set of delivery points with demand, and computes the most efficient set of routes to serve every delivery while respecting vehicle capacity — then benchmarks the result against a naive (non-optimized) routing approach to quantify the improvement.
+
+**🔗 Live demo:** https://sudeepmengji.pythonanywhere.com
 
 ---
 
@@ -130,8 +133,9 @@ route_optimizer project/
 
 ### 1. Clone and set up a virtual environment
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Sudeep-mengji/route-optimizer.git
 cd route_optimizer_project
+cd route-optimizer
 python -m venv venv
 venv\Scripts\activate        # Windows
 # source venv/bin/activate   # macOS/Linux
