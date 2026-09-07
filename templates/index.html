@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RouteOpt — Dispatch Console</title>
+{% load static %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-mark">◈</span>
+        <span class="brand-name">ROUTE<span class="accent">OPT</span></span>
+    </div>
+    <div class="status-line"><span class="status-dot"></span>SYSTEM ONLINE</div>
+    <div class="user-line">
+        {{ request.user.username }}
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Sign out</button>
+        </form>
+    </div>
+</header>
+
+<main class="console">
+
+    <aside class="panel sidebar">
+        <h2 class="panel-title">Manifest Entry<span class="panel-sub">Add stops &amp; fleet</span></h2>
+
+        <div class="entry-block">
+            <label class="entry-label">Delivery point</label>
+            <div class="entry-row">
+                <input type="text" id="dpAddress" placeholder="Address, e.g. Whitefield">
+                <input type="number" id="dpDemand" placeholder="Qty">
+                <button id="addDeliveryBtn" class="btn-add">＋</button>
+            </div>
+            <p id="dpMessage" class="form-message"></p>
+        </div>
+
+        <div class="entry-block">
+            <label class="entry-label">Vehicle</label>
+            <div class="entry-row">
+                <input type="text" id="vName" placeholder="Name, e.g. Truck C">
+                <input type="number" id="vCapacity" placeholder="Cap.">
+                <button id="addVehicleBtn" class="btn-add">＋</button>
+            </div>
+            <p id="vMessage" class="form-message"></p>
+        </div>
+
+        <div class="lists">
+            <div class="list-col">
+                <h3 class="list-title">Stops <span id="dpCount" class="list-count"></span></h3>
+                <ul id="deliveryList" class="ticket-list"></ul>
+            </div>
+            <div class="list-col">
+                <h3 class="list-title">Fleet <span id="vCount" class="list-count"></span></h3>
+                <ul id="vehicleList" class="ticket-list"></ul>
+            </div>
+        </div>
+    </aside>
+
+    <section class="main-col">
+
+        <div class="run-row">
+            <button id="optimizeBtn" class="btn-run">Dispatch Optimization Run</button>
+            <p id="optimizeStatus" class="run-status">Optimizing routes…</p>
+        </div>
+
+        <div id="stats" class="manifest-strip" style="display:none;">
+            <div class="ticket">
+                <span class="ticket-label">Naive</span>
+                <span class="ticket-value" id="naiveDist">—</span>
+                <span class="ticket-unit">km</span>
+            </div>
+            <div class="ticket ticket-optimized">
+                <span class="ticket-label">Optimized</span>
+                <span class="ticket-value" id="optDist">—</span>
+                <span class="ticket-unit">km</span>
+            </div>
+            <div class="ticket ticket-improve">
+                <span class="ticket-label">Saved</span>
+                <span class="ticket-value" id="improvement">—</span>
+                <span class="ticket-unit">%</span>
+            </div>
+        </div>
+
+        <div id="map" class="map-frame"></div>
+
+        <div class="panel history-panel">
+            <div class="panel-title-row">
+                <h2 class="panel-title">Run Log<span class="panel-sub">Past optimizations</span></h2>
+                <button id="clearHistoryBtn" class="btn-clear">Clear Log</button>
+            </div>
+            <table id="historyTable">
+                <thead>
+                    <tr><th>#</th><th>Timestamp</th><th>Naive</th><th>Optimized</th><th>Saved</th></tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+
+    </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
