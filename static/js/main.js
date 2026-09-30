@@ -199,8 +199,10 @@ document.getElementById('clearHistoryBtn').addEventListener('click', async () =>
 // Initialize the map, centered roughly on Bangalore
 const map = L.map('map').setView([12.9352, 77.6146], 12);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
 }).addTo(map);
 
 // Different colors per vehicle route
